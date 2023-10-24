@@ -1,0 +1,36 @@
+-- chatbot --
+create table tipo_documento(
+id_tipoDoc INT AUTO_INCREMENT PRIMARY KEY,
+tipoDoc		 VARCHAR(2) not null,
+descripcion_tipoDoc VARCHAR(30) not null,
+estado_tipoDoc BINARY DEFAULT(1)
+);
+
+
+create table usuarios(
+id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+id_tipoDoc int not null,
+doc_usuario int(20)  UNIQUE not null,
+nombre_usuario VARCHAR(100) not null,
+email_usuario  VARCHAR(50) not null,
+telefono_usuario VARCHAR(20) not null,
+estado_usuario BINARY DEFAULT(1) not null,
+FechaReg datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+FechaMod datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY (id_tipoDoc) REFERENCES tipo_documento(id_tipoDoc)
+);
+
+
+create table historialChat(
+id_historialChat INT AUTO_INCREMENT PRIMARY KEY,
+id_usuario int not null,
+fecha_historialChat DATE not null,
+chat_usuario TEXT not null,
+estado_usuario BINARY DEFAULT(1) not null,
+FechaReg datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+FechaMod datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+);
+
+-- insert tipo_documento --
+insert into tipo_documento(tipoDoc,descripcion_tipoDoc) values ('TI','Tarjeta de identidad'),('CC','Cedula de ciudadania'),('CE','Cedula de extranjeria'),('PS','Pasaporte'),('PT','Permiso temporal'),('PE','Permiso especial');
